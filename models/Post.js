@@ -1,9 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
+const { post } = require('../controllers/homeRoutes');
 
-class Project extends Model {}
+class post extends Model {}
 
-Project.init(
+post.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -40,8 +41,8 @@ Project.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'project',
+    modelName: 'post',
   }
 );
 
-module.exports = Project;
+module.exports = post;
