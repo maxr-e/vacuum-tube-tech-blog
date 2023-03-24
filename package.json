@@ -20,7 +20,9 @@
   "dependencies": {
     "express": "^4.18.2",
     "express-handlebars": "^7.0.2",
+    "express-session": "^1.17.3",
     "mysql": "^2.18.1",
-    "sequelize": "^6.29.3"
+    "sequelize": "^6.29.3",
+    "session": "^0.1.0"
   }
 }
