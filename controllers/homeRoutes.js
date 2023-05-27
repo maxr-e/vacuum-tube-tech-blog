@@ -53,10 +53,10 @@ router.get('/post/:id', async (req, res) => {
   }
 });
 
-router.get('/blog/:id', withAuth, async (req, res) => {
+router.get('/post/:id', withAuth, async (req, res) => {
   try {
-    // Get all blogs and JOIN with user data
-    const blogData = await Blog.findOne({
+    // Get all post and JOIN with user data
+    const postData = await post.findOne({
       where: {
         id: req.params.id
       },
@@ -65,7 +65,7 @@ router.get('/blog/:id', withAuth, async (req, res) => {
       include: [
         {
           model: Comment,
-          attributes: ['id', 'comment_content', 'date_created', 'blog_id', 'user_id'],
+          attributes: ['id', 'comment_content', 'date_created', 'post_id', 'user_id'],
           include: {
             model: User,
             attributes: ['username']
@@ -78,10 +78,10 @@ router.get('/blog/:id', withAuth, async (req, res) => {
       ],
     });
 
-    const blog = blogData.get({ plain: true });
+    const post = postData.get({ plain: true });
 
-    res.render('single_blog', {
-      ...blog,
+    res.render('single_post', {
+      ...post,
       loggedIn: req.session.loggedIn
     });
   } catch (err) {
@@ -95,7 +95,7 @@ router.get('/profile', withAuth, async (req, res) => {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
-      include: [{ model: post }],
+      include: [{ model: Post }],
     });
 
     const user = userData.get({ plain: true });
@@ -111,8 +111,8 @@ router.get('/profile', withAuth, async (req, res) => {
 
 router.get('/home', async (req, res) => {
   try {
-    // Get all blogs and JOIN with user data
-    const blogData = await Blog.findAll({
+    // Get all post and JOIN with user data
+    const postData = await post.findAll({
       attributes: ['id', 'title', 'content', 'date_created'],
           
           include: [{
@@ -124,7 +124,7 @@ router.get('/home', async (req, res) => {
 
               {
                   model: Comment,
-                  attributes: ['id', 'comment_content', 'blog_id', 'user_id'],
+                  attributes: ['id', 'comment_content', 'post_id', 'user_id'],
                   include: {
                       model: User,
                       attributes: ['username']
@@ -133,11 +133,11 @@ router.get('/home', async (req, res) => {
           ]
         })
     // Serialize data so the template can read it
-    const blogs = blogData.map((blog) => blog.get({ plain: true }));
+    const post = postData.map((post) => post.get({ plain: true }));
   
     // Pass serialized data and session flag into template
     res.render('homepage', { 
-      blogs, 
+      post, 
       loggedIn: req.session.loggedIn 
     });
   } catch (err) {

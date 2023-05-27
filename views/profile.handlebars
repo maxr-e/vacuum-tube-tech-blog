@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-auto">
+        <h2>Welcome, {{username}}!</h2>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <h3>Create a New Post:</h3>
+        <form class="form new-post-form">
+            <div class="form-group">
+                <label for="post-title">Title:</label>
+                <input class="form-input" type="text" id="post-title" name="post-title" />
+            </div>
+            <div class="form-group">
+                <label for="post-content">Content:</label>
+                <textarea class="form-input" id="post-content" name="post-content"></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6 post-list">
+        {{#if posts.length}}
+        <h3>Your Current posts:</h3>
+        {{#each posts as |post|}}
+        <div class="container container-fluid mb-2">
+            <div class="col-md-8">
+                <h4><a href="/post/{{post.id}}">{{post.title}}</a> created {{format_date post.date_created}}</h4>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-sm btn-danger delete-post" data-id="{{post.id}}">Delete</button>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    {{/if}}
+</div>
+
+<script src="/js/postPost.js"></script>
