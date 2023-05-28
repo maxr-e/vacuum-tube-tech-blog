@@ -1,10 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const { post } = require('../controllers/homeRoutes');
 
-class post extends Model {}
+class Post extends Model {}
 
-post.init(
+Post.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -45,4 +44,4 @@ post.init(
   }
 );
 
-module.exports = post;
+module.exports = Post;

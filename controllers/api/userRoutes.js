@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Blog, Comment } = require('../../models');
+const { User, Post, Comment } = require('../../models');
 
 router.get('/', async (req, res) => {
   try {
@@ -22,7 +22,7 @@ router.get("/:id", async (req, res) => {
       },
       include: [
         {
-          model: Blog,
+          model: Post,
           attributes: ["id", "title", "content"],
         },
 
@@ -30,18 +30,18 @@ router.get("/:id", async (req, res) => {
           model: Comment,
           attributes: ["id", "comment_content"],
           include: {
-            model: Blog,
+            model: Post,
             attributes: ["title"],
           },
         },
         {
-          model: Blog,
+          model: Post,
           attributes: ["title"],
         },
       ],
     });
     if (!userData) {
-      res.status(404).json({ message: "No blog found with this id!" });
+      res.status(404).json({ message: "No post found with this id!" });
       return;
     }
 
