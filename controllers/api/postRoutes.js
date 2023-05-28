@@ -36,7 +36,7 @@ router.get("/:id", async (req, res) => {
   try {
     const postData = await Post.findOne({
       where: {
-        id: req.params.id,
+        id: req.params.id
       },
       attributes: ["id", "title", "content", "date_created"],
       include: [
@@ -49,11 +49,11 @@ router.get("/:id", async (req, res) => {
           attributes: ["id", "comment_content", "post_id", "user_id"],
           include: {
             model: User,
-            attributes: ["username"],
+            attributes: ["username"]
           },
         },
       ],
-    });
+    })
     if (!postData) {
       res.status(404).json({ message: "No post found with this id!" });
       return;
